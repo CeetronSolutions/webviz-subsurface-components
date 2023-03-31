@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */ // remove when ready to fix these.
 
 import React from "react";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// @rmt: Changed require to import
 import convert from "convert-units";
 
 export interface ScaleProps {
