@@ -1,6 +1,7 @@
 import React from "react";
 
-import GroupTree from "./Plot/group_tree";
+// import GroupTree from "./Plot/group_tree";
+import GroupTree from "./Plot/GroupTree";
 import { DatedTrees, EdgeMetadata, NodeMetadata } from "./types";
 import { isEqual } from "lodash";
 
@@ -42,13 +43,14 @@ export const GroupTreePlot: React.FC<GroupTreePlotProps> = (
 
     if (
         isMounted &&
-        // divRef.current &&
+        divRef.current &&
         (!isEqual(prevDatedTrees, props.datedTrees) || prevId !== props.id)
     ) {
         setPrevDatedTrees(props.datedTrees);
         setPrevId(props.id);
         groupTreeRef.current = new GroupTree(
-            props.id,
+            // props.id,
+            divRef.current,
             props.datedTrees,
             props.selectedEdgeKey,
             props.selectedNodeKey,
@@ -62,14 +64,16 @@ export const GroupTreePlot: React.FC<GroupTreePlotProps> = (
         setPrevSelectedEdgeKey(props.selectedEdgeKey);
         if (!groupTreeRef.current) return;
 
-        groupTreeRef.current.flowrate = props.selectedEdgeKey;
+        // groupTreeRef.current.flowrate = props.selectedEdgeKey;
+        groupTreeRef.current.flowRateKey = props.selectedEdgeKey;
     }
 
     if (prevSelectedNodeKey !== props.selectedNodeKey) {
         setPrevSelectedNodeKey(props.selectedNodeKey);
         if (!groupTreeRef.current) return;
 
-        groupTreeRef.current.nodeinfo = props.selectedNodeKey;
+        // groupTreeRef.current.nodeinfo = props.selectedNodeKey;
+        groupTreeRef.current.nodeKey = props.selectedNodeKey;
     }
 
     if (prevSelectedDateTime !== props.selectedDateTime) {

@@ -23,11 +23,23 @@ import {
 /* eslint no-useless-concat: "off" */
 /* Fix this lint when rewriting the whole file */
 
+interface Position {
+    x: number;
+    y: number;
+}
+
 interface RecursiveTreeNodeAndRenderInfo extends RecursiveTreeNode {
     customId: string;
-    x0?: number;
-    y0?: number;
+    startPosition: Position; // For start of transition
+    endPosition: Position; // For end of transition
     isVisible: boolean;
+    children: RecursiveTreeNodeAndRenderInfo[];
+    hiddenChildren: RecursiveTreeNodeAndRenderInfo[];
+}
+
+interface DatedHierarchyNode {
+    dates: string[];
+    tree: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>;
 }
 
 /**
@@ -38,20 +50,20 @@ interface RecursiveTreeNodeAndRenderInfo extends RecursiveTreeNode {
  */
 export default class GroupTree {
     _treeWidth: number;
-    _data: any;
+    _datedHierarchyNodes: DatedHierarchyNode[];
+    _currentTree: any;
 
     // svg element as d3 selection
     _svgElementSelection: d3.Selection<SVGGElement, any, null, undefined>;
     _textPaths: d3.Selection<SVGGElement, any, null, undefined>;
     _renderTree: d3.TreeLayout<any>;
 
-    _currentFlowRate: string;
-    _currentNodeInfo: string;
+    _currentEdgeKey: string;
+    _currentNodeKey: string;
     _currentDateTime: string;
 
-    // Map with node/edge key and corresponding label and unit
-    _nodeMetadataMap: Map<string, { label: string; unit?: string }>;
-    _edgeLabelAndUnitMap: Map<string, { label: string; unit?: string }>;
+    // Map with node/edge key and corresponding metadata
+    _keyToMetadataMap: Map<string, { label: string; unit?: string }>;
 
     _pathScaleMap: Map<string, d3.ScaleLinear<number, number, never>>;
 
@@ -62,13 +74,13 @@ export default class GroupTree {
      *
      * @param dom_element_id
      * @param {group-tree-data} tree_data
-     * @param defaultFlowRate
+     * @param initialFlowRate
      */
     constructor(
         renderDivElement: HTMLDivElement,
         datedTrees: DatedTrees,
-        defaultFlowRate: string,
-        defaultNodeInfo: string,
+        initialFlowRate: string,
+        initialNodeInfo: string,
         currentDateTime: string,
         edgeMetadataList: EdgeMetadata[],
         nodeMetadataList: NodeMetadata[]
@@ -89,23 +101,20 @@ export default class GroupTree {
             datedTrees.length !== 0 ? cloneDeep(datedTrees) : [emptyDatedTree];
 
         // Map from node/edge key to label and unit
-        this._nodeMetadataMap = new Map();
-        this._edgeLabelAndUnitMap = new Map();
-        nodeMetadataList.forEach((elm) => {
-            this._nodeMetadataMap.set(elm.key, {
-                label: elm.label,
-                unit: elm.unit,
-            });
-        });
-        edgeMetadataList.forEach((elm) => {
-            this._edgeLabelAndUnitMap.set(elm.key, {
+        const metadataList: (EdgeMetadata | NodeMetadata)[] = [
+            ...edgeMetadataList,
+            ...nodeMetadataList,
+        ];
+        this._keyToMetadataMap = new Map();
+        metadataList.forEach((elm) => {
+            this._keyToMetadataMap.set(elm.key, {
                 label: elm.label,
                 unit: elm.unit,
             });
         });
 
-        this._currentFlowRate = defaultFlowRate;
-        this._currentNodeInfo = defaultNodeInfo;
+        this._currentEdgeKey = initialFlowRate;
+        this._currentNodeKey = initialNodeInfo;
         this._currentDateTime = currentDateTime;
 
         // Retrieve edge values from nodes for each dated tree
@@ -165,7 +174,10 @@ export default class GroupTree {
 
         this._renderTree = d3.tree().size([treeHeight, this._treeWidth]);
 
-        this._data = GroupTree.initHierarchies(_datedTrees, treeHeight);
+        this._datedHierarchyNodes = GroupTree.createDatedHierarchyNodes(
+            _datedTrees,
+            treeHeight
+        );
 
         this._currentTree = {};
 
@@ -176,21 +188,41 @@ export default class GroupTree {
      * Initialize all trees in the group tree data structure, once for the entire visualization.
      *
      */
-    static initHierarchies(
+    static createDatedHierarchyNodes(
         datedTrees: DatedTrees,
         treeHeight: number
-    ): {
-        dates: string[];
-        tree: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>;
-    }[] {
+    ): DatedHierarchyNode[] {
         let clonedDatedTrees = cloneDeep(datedTrees);
 
         // Generate the node-id used to match in the enter, update and exit selections
-        const createNodeId = (node: d3.HierarchyNode<RecursiveTreeNode>) => {
+        const createNodeId = (
+            node: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ) => {
             return node.parent === null
                 ? node.data.node_label
                 : `${node.parent.id}_${node.data.node_label}`;
         };
+
+        // Function to convert RecursiveTreeNode to RecursiveTreeNodeAndRenderInfo
+        function convertNode(
+            node: RecursiveTreeNode
+        ): RecursiveTreeNodeAndRenderInfo {
+            const convertedNode: RecursiveTreeNodeAndRenderInfo = {
+                ...node,
+                customId: "",
+                startPosition: { x: 0, y: 0 },
+                endPosition: { x: 0, y: 0 },
+                isVisible: true,
+                // children: [], // Will this work?
+                children: node.children?.map(convertNode) ?? [], // Recursively convert children
+                hiddenChildren: [],
+            };
+
+            // Recursively convert children
+            // convertedNode.children = node.children.map(convertNode);
+
+            return convertedNode;
+        }
 
         const output: {
             dates: string[];
@@ -199,116 +231,121 @@ export default class GroupTree {
 
         // For each dated tree, generate a d3 hierarchy with additional render info
         for (let datedTree of clonedDatedTrees) {
-            // Convert from:
-            // RecursiveTreeNode -> d3.HierarchyNode<RecursiveTreeNode>
-            const root = d3.hierarchy(datedTree.tree, (node) => node.children);
+            // RecursiveTreeNode->RecursiveTreeNodeAndRenderInfo
+            const convertedTree = convertNode(datedTree.tree);
 
-            // Convert from:
+            // Create a d3 hierarchy from the converted tree
+            // RecursiveTreeNodeAndRenderInfo -> d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+            const rootNode = d3.hierarchy(
+                convertedTree,
+                (node) => node.children
+            );
+
+            // Create custom node Ids from hierarchy
             // d3.HierarchyNode<RecursiveTreeNode> -> d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
-            const recursiveNodesWithRenderInfo = root
+            rootNode
                 .descendants()
-                .map((node) => {
-                    const customId = createNodeId(node);
-                    const nodeWithRenderInfo: RecursiveTreeNodeAndRenderInfo = {
-                        customId: customId,
-                        isVisible: false,
-                        ...node.data,
-                    };
-                    return d3.hierarchy(nodeWithRenderInfo);
-                });
+                .forEach((node) => (node.data.customId = createNodeId(node)));
+
+            // Set root node position
+            rootNode.data.startPosition = { x: treeHeight / 2, y: 0 };
 
             output.push({
                 dates: datedTree.dates,
-                tree: recursiveNodesWithRenderInfo,
+                tree: rootNode,
             });
         }
         return output;
     }
 
     /**
-     * @returns {*} -The initialized hierarchical group tree data structure
-     */
-    get data() {
-        return this._data;
-    }
-
-    /**
-     * Set the flowrate and update display of all edges accordingly.
+     * Set the selected flow rate key and update display of all edges accordingly.
      *
-     * @param flowrate - key identifying the flowrate of the incoming edge
+     * @param flowRateKey - key identifying the flow rate, i.e. edge key
      */
-    set flowrate(flowrate) {
-        this._currentFlowRate = flowrate;
+    set flowRateKey(flowRateKey: string) {
+        this._currentEdgeKey = flowRateKey;
 
-        const current_tree_index = this._data.findIndex((e) => {
+        const currentTreeIndex = this._datedHierarchyNodes.findIndex((e) => {
             return e.dates.includes(this._currentDateTime);
         });
 
-        const date_index = this._data[current_tree_index].dates.indexOf(
-            this._currentDateTime
-        );
+        const dateIndex = this._datedHierarchyNodes[
+            currentTreeIndex
+        ].dates.indexOf(this._currentDateTime);
 
         this._svgElementSelection
-            .selectAll("path.link")
+            .selectAll<
+                SVGPathElement,
+                d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+            >("path.link")
             .transition()
             .duration(this._transitionTime)
             .attr(
                 "class",
-                () => `link grouptree_link grouptree_link__${flowrate}`
+                () => `link grouptree_link grouptree_link__${flowRateKey}`
             )
             .style("stroke-width", (d) =>
-                this.getEdgeStrokeWidth(
-                    flowrate,
-                    d.data.edge_data[flowrate]?.[date_index] ?? 0
+                this.createEdgeStrokeWidth(
+                    flowRateKey,
+                    d.data.edge_data[flowRateKey]?.[dateIndex] ?? 0
                 )
             )
             .style("stroke-dasharray", (d) => {
-                return (d.data.edge_data[flowrate]?.[date_index] ?? 0) > 0
+                return (d.data.edge_data[flowRateKey]?.[dateIndex] ?? 0) > 0
                     ? "none"
                     : "5,5";
             });
     }
-
-    get flowrate() {
-        return this._currentFlowRate;
+    get flowRateKey(): string {
+        return this._currentEdgeKey;
     }
 
-    set nodeinfo(nodeinfo) {
-        this._currentNodeInfo = nodeinfo;
+    /**
+     * Set the selected node key and update display of all nodes accordingly.
+     *
+     * @param nodeKey - key identifying the current active node
+     */
+    set nodeKey(nodeKey: string) {
+        this._currentNodeKey = nodeKey;
 
-        const current_tree_index = this._data.findIndex((e) => {
+        const currentTreeIndex = this._datedHierarchyNodes.findIndex((e) => {
             return e.dates.includes(this._currentDateTime);
         });
 
-        const date_index = this._data[current_tree_index].dates.indexOf(
-            this._currentDateTime
-        );
+        const dateIndex = this._datedHierarchyNodes[
+            currentTreeIndex
+        ].dates.indexOf(this._currentDateTime);
 
         this._svgElementSelection
-            .selectAll(".grouptree__pressurelabel")
+            .selectAll<
+                SVGPathElement,
+                d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+            >(".grouptree__pressurelabel")
             .text(
                 (d) =>
-                    d.data.node_data?.[nodeinfo]?.[date_index]?.toFixed(0) ??
-                    "NA"
+                    d.data.node_data?.[nodeKey]?.[dateIndex]?.toFixed(0) ?? "NA"
             );
 
         this._svgElementSelection
             .selectAll(".grouptree__pressureunit")
             .text(() => {
-                const t = this._propertyToLabelMap.get(nodeinfo) ?? ["", ""];
-                return t[1];
+                const t = this._keyToMetadataMap.get(nodeKey);
+                return t?.unit ?? "";
             });
     }
-
-    get nodeinfo() {
-        return this._currentNodeInfo;
+    get nodeKey(): string {
+        return this._currentNodeKey;
     }
 
-    getEdgeStrokeWidth(key, val) {
-        const normalized =
-            this._pathScaleMap[key] !== undefined
-                ? this._pathScaleMap[key](val ?? 0)
-                : 2;
+    /**
+     * Create edge stroke width string from edge key and value.
+     * @param key - edge key
+     * @param value - edge value to scale
+     * @returns Stroke width string scaled using value and the path scale for the edge key
+     */
+    createEdgeStrokeWidth(key: string, value: number) {
+        const normalized = this._pathScaleMap.get(key)?.(value) ?? 2;
         return `${normalized}px`;
     }
 
@@ -317,20 +354,20 @@ export default class GroupTree {
      * The state is changed either due to a branch open/close, or that the tree is entirely changed
      * when moving back and fourth in time.
      *
-     * @param root
+     * @param newDateTime - the new date time to visualize
      */
     update(newDateTime: string) {
         const self = this;
 
         self._currentDateTime = newDateTime;
 
-        const new_tree_index = self._data.findIndex((e) => {
+        const newTreeIndex = self._datedHierarchyNodes.findIndex((e) => {
             return e.dates.includes(newDateTime);
         });
 
-        const root = self._data[new_tree_index];
+        const root = self._datedHierarchyNodes[newTreeIndex];
 
-        const date_index = root.dates.indexOf(self._currentDateTime);
+        const dateIndex = root.dates.indexOf(self._currentDateTime);
 
         /**
          * Assigns y coordinates to all tree nodes in the rendered tree.
@@ -338,49 +375,62 @@ export default class GroupTree {
          * @param {int} width - the
          * @returns a rendered tree width coordinates for all nodes.
          */
-        function growNewTree(t, width) {
-            t.descendants().forEach((d) => {
-                d.y = (d.depth * width) / (t.height + 1);
+        function growNewTree(
+            tree: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>,
+            width: number
+        ) {
+            tree.descendants().forEach((d) => {
+                d.data.endPosition.y = (d.depth * width) / (tree.height + 1);
             });
 
-            return t;
+            return tree;
         }
 
-        function doPostUpdateOperations(tree) {
+        function doPostUpdateOperations(
+            tree: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ) {
             setEndPositions(tree.descendants());
             setNodeVisibility(tree.descendants(), true);
             return tree;
         }
 
-        function findClosestVisibleParent(d) {
+        function findClosestVisibleParent(
+            d: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ) {
             let c = d;
-            while (c.parent && !c.isvisible) {
+            while (c.parent && !c.data.isVisible) {
                 c = c.parent;
             }
             return c;
         }
 
-        function getClosestVisibleParentStartCoordinates(d) {
+        function getClosestVisibleParentStartCoordinates(
+            d: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ): Position {
             const p = findClosestVisibleParent(d);
-            return { x: p.x0 ?? 0, y: p.y0 ?? 0 };
+            return p.data.startPosition;
         }
 
-        function getClosestVisibleParentEndCoordinates(d) {
+        function getClosestVisibleParentEndCoordinates(
+            d: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ): Position {
             const p = findClosestVisibleParent(d);
-            return { x: p.x, y: p.y };
+            return p.data.endPosition;
         }
 
         /**
          * Implicitly alter the state of a node, by hiding its children
          * @param node
          */
-        function toggleBranch(node) {
-            if (node.children) {
-                node._children = node.children;
-                node.children = null;
+        function toggleBranch(
+            node: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ): void {
+            if (node.data.children) {
+                node.data.hiddenChildren = node.data.children;
+                node.data.children = []; //null;
             } else {
-                node.children = node._children;
-                node._children = null;
+                node.data.children = node.data.hiddenChildren ?? [];
+                node.data.hiddenChildren = [];
             }
 
             self.update(self._currentDateTime);
@@ -391,9 +441,12 @@ export default class GroupTree {
          * @param nodes
          * @param visibility
          */
-        function setNodeVisibility(nodes, visibility) {
+        function setNodeVisibility(
+            nodes: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>[],
+            isVisible: boolean
+        ) {
             nodes.forEach((d) => {
-                d.isvisible = visibility;
+                d.data.isVisible = isVisible;
             });
         }
 
@@ -401,28 +454,32 @@ export default class GroupTree {
          * After node translation transition, save end position
          * @param nodes
          */
-        function setEndPositions(nodes) {
+        function setEndPositions(
+            nodes: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>[]
+        ) {
             nodes.forEach((d) => {
-                d.x0 = d.x;
-                d.y0 = d.y;
+                d.data.startPosition = d.data.endPosition;
             });
         }
 
-        function getToolTipText(data, date_index) {
-            if (data === undefined || date_index === undefined) {
+        function getToolTipText(
+            data: { [key: string]: number[] },
+            dateIndex: number
+        ) {
+            if (data === undefined || dateIndex === undefined) {
                 return "";
             }
 
             const propNames = Object.keys(data);
             let text = "";
             propNames.forEach(function (s) {
-                const t = self._propertyToLabelMap.get(s) ?? [s, ""];
-                const pre = t[0];
-                const unit = t[1];
+                const t = self._keyToMetadataMap.get(s);
+                const pre = t?.label ?? "";
+                const unit = t?.unit ?? "";
                 text +=
                     pre +
                     " " +
-                    (data[s]?.[date_index]?.toFixed(0) ?? "") +
+                    (data[s]?.[dateIndex]?.toFixed(0) ?? "") +
                     " " +
                     unit +
                     "\n";
@@ -438,18 +495,18 @@ export default class GroupTree {
          * @param newRoot
          * @param oldRoot
          */
-        function cloneExistingNodeStates(newRoot, oldRoot) {
+        function cloneExistingNodeStates(
+            newRoot: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>,
+            oldRoot: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+        ) {
             if (Object.keys(oldRoot).length > 0) {
                 oldRoot.descendants().forEach((oldNode) => {
                     newRoot.descendants().forEach((newNode) => {
                         if (oldNode.id === newNode.id) {
-                            newNode.x0 = oldNode.x0;
-                            newNode.y0 = oldNode.y0;
-
-                            oldNode.x = newNode.x;
-                            oldNode.y = newNode.y;
-
-                            newNode.isvisible = oldNode.isvisible;
+                            newNode.data.startPosition =
+                                oldNode.data.startPosition;
+                            oldNode.data.endPosition = newNode.data.endPosition;
+                            newNode.data.isVisible = oldNode.data.isVisible;
                         }
                     });
                 });
@@ -464,16 +521,22 @@ export default class GroupTree {
          *
          * @param nodes - list of nodes in a tree
          */
-        function updateNodes(nodes, nodeinfo) {
+        function updateNodes(
+            nodes: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>[],
+            nodeKey: string
+        ) {
             const node = self._svgElementSelection
-                .selectAll("g.node")
-                .data(nodes, (d) => d.id);
+                .selectAll<
+                    SVGGElement,
+                    d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+                >("g.node")
+                .data(nodes, (d) => d.data.customId);
 
             const nodeEnter = node
                 .enter()
                 .append("g")
                 .attr("class", "node")
-                .attr("id", (d) => d.id)
+                .attr("id", (d) => d.data.customId)
                 .attr("transform", (d) => {
                     const c = getClosestVisibleParentStartCoordinates(d);
                     return `translate(${c.y},${c.x})`;
@@ -482,21 +545,23 @@ export default class GroupTree {
 
             nodeEnter
                 .append("circle")
-                .attr("id", (d) => d.id)
+                .attr("id", (d) => d.data.customId)
                 .attr("r", 6)
                 .transition()
                 .duration(self._transitionTime)
-                .attr("x", (d) => d.x)
-                .attr("y", (d) => d.y);
+                .attr("x", (d) => d.data.endPosition.x)
+                .attr("y", (d) => d.data.endPosition.y);
 
             nodeEnter
                 .append("text")
                 .attr("class", "grouptree__nodelabel")
                 .attr("dy", ".35em")
                 .style("fill-opacity", 1)
-                .attr("x", (d) => (d.children || d._children ? -21 : 21))
+                .attr("x", (d) =>
+                    d.data.children || d.data.hiddenChildren ? -21 : 21
+                )
                 .attr("text-anchor", (d) =>
-                    d.children || d._children ? "end" : "start"
+                    d.data.children || d.data.hiddenChildren ? "end" : "start"
                 )
                 .text((d) => d.data.node_label);
 
@@ -508,7 +573,7 @@ export default class GroupTree {
                 .attr("text-anchor", "middle")
                 .text(
                     (d) =>
-                        d.data.node_data[nodeinfo]?.[date_index]?.toFixed(0) ??
+                        d.data.node_data[nodeKey]?.[dateIndex]?.toFixed(0) ??
                         "NA"
                 );
 
@@ -520,20 +585,17 @@ export default class GroupTree {
                 .attr("dominant-baseline", "text-before-edge")
                 .attr("text-anchor", "middle")
                 .text(() => {
-                    const t = self._propertyToLabelMap.get(nodeinfo) ?? [
-                        "",
-                        "",
-                    ];
-                    return t[1];
+                    const t = self._keyToMetadataMap.get(nodeKey);
+                    return t?.unit ?? "";
                 });
 
             nodeEnter
                 .append("title")
-                .text((d) => getToolTipText(d.data.node_data, date_index));
+                .text((d) => getToolTipText(d.data.node_data, dateIndex));
 
             const nodeUpdate = nodeEnter.merge(node);
 
-            // Nodes from earlier exit selection may reenter if transition is interupted. Restore state.
+            // Nodes from earlier exit selection may reenter if transition is interrupted. Restore state.
             nodeUpdate
                 .filter(".exiting")
                 .interrupt()
@@ -544,14 +606,18 @@ export default class GroupTree {
                 .select("text.grouptree__pressurelabel")
                 .text(
                     (d) =>
-                        d.data.node_data[nodeinfo]?.[date_index]?.toFixed(0) ??
+                        d.data.node_data[nodeKey]?.[dateIndex]?.toFixed(0) ??
                         "NA"
                 );
 
             nodeUpdate
                 .transition()
                 .duration(self._transitionTime)
-                .attr("transform", (d) => `translate(${d.y},${d.x})`);
+                .attr(
+                    "transform",
+                    (d) =>
+                        `translate(${d.data.endPosition.y},${d.data.endPosition.x})`
+                );
 
             nodeUpdate
                 .select("circle")
@@ -559,7 +625,7 @@ export default class GroupTree {
                     "class",
                     (d) =>
                         `${"grouptree__node" + " "}${
-                            d.children || d._children
+                            d.data.children || d.data.hiddenChildren
                                 ? "grouptree__node--withchildren"
                                 : "grouptree__node"
                         }`
@@ -570,16 +636,16 @@ export default class GroupTree {
 
             nodeUpdate
                 .select("title")
-                .text((d) => getToolTipText(d.data.node_data, date_index));
+                .text((d) => getToolTipText(d.data.node_data, dateIndex));
 
-            node.exit()
+            node.exit<d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>>()
                 .classed("exiting", true)
                 .attr("opacity", 1)
                 .transition()
                 .duration(self._transitionTime)
                 .attr("opacity", 1e-6)
                 .attr("transform", (d) => {
-                    d.isvisible = false;
+                    d.data.isVisible = false;
                     const c = getClosestVisibleParentEndCoordinates(d);
                     return `translate(${c.y},${c.x})`;
                 })
@@ -590,17 +656,23 @@ export default class GroupTree {
          * Draw new edges, and update existing ones.
          *
          * @param edges -list of nodes in a tree
-         * @param flowrate - key identifying the flowrate of the incoming edge
+         * @param flowRateKey - key identifying the flowrate of the incoming edge
          */
-        function updateEdges(edges, flowrate) {
+        function updateEdges(
+            edges: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>[],
+            flowRateKey: string
+        ) {
             const link = self._svgElementSelection
-                .selectAll("path.link")
-                .data(edges, (d) => d.id);
+                .selectAll<
+                    SVGPathElement,
+                    d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+                >("path.link")
+                .data(edges, (d) => d.data.customId);
 
             const linkEnter = link
                 .enter()
                 .insert("path", "g")
-                .attr("id", (d) => `path ${d.id}`)
+                .attr("id", (d) => `path ${d.data.customId}`)
                 .attr("d", (d) => {
                     const c = getClosestVisibleParentStartCoordinates(d);
                     return diagonal(c, c);
@@ -608,39 +680,44 @@ export default class GroupTree {
 
             linkEnter
                 .append("title")
-                .text((d) => getToolTipText(d.data.edge_data, date_index));
+                .text((d) => getToolTipText(d.data.edge_data, dateIndex));
 
             const linkUpdate = linkEnter.merge(link);
 
             linkUpdate
                 .attr(
                     "class",
-                    () => `link grouptree_link grouptree_link__${flowrate}`
+                    () => `link grouptree_link grouptree_link__${flowRateKey}`
                 )
                 .transition()
                 .duration(self._transitionTime)
-                .attr("d", (d) => diagonal(d, d.parent))
+                .attr("d", (d) =>
+                    diagonal(
+                        d.data.endPosition,
+                        d.parent?.data.endPosition ?? { x: 0, y: 0 }
+                    )
+                )
                 .style("stroke-width", (d) =>
-                    self.getEdgeStrokeWidth(
-                        flowrate,
-                        d.data.edge_data[flowrate]?.[date_index] ?? 0
+                    self.createEdgeStrokeWidth(
+                        flowRateKey,
+                        d.data.edge_data[flowRateKey]?.[dateIndex] ?? 0
                     )
                 )
                 .style("stroke-dasharray", (d) => {
-                    return (d.data.edge_data[flowrate]?.[date_index] ?? 0) > 0
+                    return (d.data.edge_data[flowRateKey]?.[dateIndex] ?? 0) > 0
                         ? "none"
                         : "5,5";
                 });
 
             linkUpdate
                 .select("title")
-                .text((d) => getToolTipText(d.data.edge_data, date_index));
+                .text((d) => getToolTipText(d.data.edge_data, dateIndex));
 
-            link.exit()
+            link.exit<d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>>()
                 .transition()
                 .duration(self._transitionTime)
                 .attr("d", (d) => {
-                    d.isvisible = false;
+                    d.data.isVisible = false;
                     const c = getClosestVisibleParentEndCoordinates(d);
                     return diagonal(c, c);
                 })
@@ -651,7 +728,7 @@ export default class GroupTree {
              * @param s - source node
              * @param d - destination node
              */
-            function diagonal(s, d) {
+            function diagonal(s: Position, d: Position): string {
                 return `M ${d.y} ${d.x}
                  C ${(d.y + s.y) / 2} ${d.x},
                    ${(d.y + s.y) / 2} ${s.x},
@@ -664,10 +741,15 @@ export default class GroupTree {
          *
          * @param edges - list of nodes in a tree
          */
-        function updateEdgeTexts(edges) {
+        function updateEdgeTexts(
+            edges: d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>[]
+        ) {
             const textpath = self._textPaths
-                .selectAll(".edge_info_text")
-                .data(edges, (d) => d.id);
+                .selectAll<
+                    SVGTextPathElement,
+                    d3.HierarchyNode<RecursiveTreeNodeAndRenderInfo>
+                >(".edge_info_text")
+                .data(edges, (d) => d.data.customId);
 
             const enter = textpath
                 .enter()
@@ -677,7 +759,7 @@ export default class GroupTree {
                 .append("textPath")
                 .attr("class", "edge_info_text")
                 .attr("startOffset", "50%")
-                .attr("xlink:href", (d) => `#path ${d.id}`);
+                .attr("xlink:href", (d) => `#path ${d.data.customId}`);
 
             enter
                 .merge(textpath)
@@ -691,13 +773,13 @@ export default class GroupTree {
         }
 
         const newTree = cloneExistingNodeStates(
-            growNewTree(this._renderTree(root.tree), this._width),
+            growNewTree(this._renderTree(root.tree), this._treeWidth),
             this._currentTree
         );
 
         // execute visualization operations on enter, update and exit selections
-        updateNodes(newTree.descendants(), this.nodeinfo);
-        updateEdges(newTree.descendants().slice(1), this.flowrate);
+        updateNodes(newTree.descendants(), this.nodeKey);
+        updateEdges(newTree.descendants().slice(1), this.flowRateKey);
         updateEdgeTexts(newTree.descendants().slice(1));
 
         // save the state of the now current tree, before next update
