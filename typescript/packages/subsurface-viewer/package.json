@@ -21,7 +21,6 @@
         "transpile": "tsc --project ./tsconfig.json",
         "copy-files": "copyfiles --up 1 \"src/{layers,assets}/**/*.png\" dist/",
         "build": "git clean -xdff dist && npm run transpile && npm run copy-files",
-        "postinstall": "npm run build",
         "test_perf": "jest _performance",
         "test_correctness": "jest --coverage --testPathIgnorePatterns='_performance'",
         "test": "jest --coverage",
