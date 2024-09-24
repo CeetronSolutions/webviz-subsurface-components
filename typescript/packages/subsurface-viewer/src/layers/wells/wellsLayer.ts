@@ -54,7 +54,6 @@ import {
     invertPath,
     splineRefine,
 } from "./utils/spline";
-import { width } from "@mui/system";
 
 type StyleAccessorFunction = (
     object: Feature,
