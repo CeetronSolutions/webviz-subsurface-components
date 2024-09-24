@@ -1,5 +1,6 @@
 import type {
     Color,
+    FilterContext,
     Layer,
     LayerData,
     LayersList,
@@ -53,6 +54,7 @@ import {
     invertPath,
     splineRefine,
 } from "./utils/spline";
+import { width } from "@mui/system";
 
 type StyleAccessorFunction = (
     object: Feature,
@@ -131,6 +133,11 @@ export interface WellsLayerProps extends ExtendedLayerProps {
 
     // Non public properties:
     reportBoundingBox?: React.Dispatch<ReportBoundingBoxAction>;
+
+    widthMaxPixels?: number;
+    widthMinPixels?: number;
+    widthUnits?: string;
+    wellNameZoomThreshold?: number;
 }
 
 const defaultProps = {
@@ -156,6 +163,10 @@ const defaultProps = {
     ZIncreasingDownwards: true,
     simplifiedRendering: false,
     section: false,
+    widthMaxPixels: undefined,
+    widthMinPixels: undefined,
+    widthUnits: "pixels",
+    wellNameZoomThreshold: undefined,
 };
 
 export interface LogCurveDataType {
@@ -400,6 +411,8 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
             return [];
         }
 
+        this.state;
+
         const data = this.state["data"] as FeatureCollection;
         const coarseData = this.state["coarseData"] as FeatureCollection;
 
@@ -428,7 +441,7 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
             stroked: false,
             positionFormat,
             pointRadiusUnits: "pixels",
-            lineWidthUnits: "pixels",
+            lineWidthUnits: this.props.widthUnits,
             pointRadiusScale: this.props.pointRadiusScale,
             lineWidthScale: this.props.lineWidthScale,
             getLineWidth: getSize(LINE, this.props.lineStyle?.width, -1),
@@ -437,6 +450,8 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
             pointBillboard: true,
             parameters,
             visible: fastDrawing,
+            widthMaxPixels: this.props.widthMaxPixels,
+            widthMinPixels: this.props.widthMinPixels,
         };
 
         const colorsLayerProps = this.getSubLayerProps({
@@ -660,6 +675,19 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
             layers.push(fastLayer);
         }
         return layers;
+    }
+
+    filterSubLayer(context: FilterContext): boolean {
+        if (context.layer.id !== "names") {
+            return true;
+        }
+
+        const zoom = context.viewport.zoom;
+        const threshold = this.props.wellNameZoomThreshold;
+        if (!threshold) {
+            return true;
+        }
+        return zoom <= threshold;
     }
 
     getPickingInfo({ info }: { info: PickingInfo }): WellsPickInfo {
