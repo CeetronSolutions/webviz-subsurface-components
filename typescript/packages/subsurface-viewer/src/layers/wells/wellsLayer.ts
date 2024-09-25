@@ -677,7 +677,7 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
     }
 
     filterSubLayer(context: FilterContext): boolean {
-        if (context.layer.id !== "names") {
+        if (!context.layer.id.includes("names")) {
             return true;
         }
 
@@ -686,7 +686,7 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
         if (!threshold) {
             return true;
         }
-        return zoom <= threshold;
+        return zoom >= threshold;
     }
 
     getPickingInfo({ info }: { info: PickingInfo }): WellsPickInfo {
