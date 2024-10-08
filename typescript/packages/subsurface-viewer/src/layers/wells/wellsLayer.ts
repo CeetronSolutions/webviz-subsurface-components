@@ -133,8 +133,8 @@ export interface WellsLayerProps extends ExtendedLayerProps {
     // Non public properties:
     reportBoundingBox?: React.Dispatch<ReportBoundingBoxAction>;
 
-    widthMaxPixels?: number;
-    widthMinPixels?: number;
+    lineWidthMaxPixels?: number;
+    lineWidthMinPixels?: number;
     widthUnits?: string;
     wellNameZoomThreshold?: number;
 }
@@ -162,8 +162,8 @@ const defaultProps = {
     ZIncreasingDownwards: true,
     simplifiedRendering: false,
     section: false,
-    widthMaxPixels: undefined,
-    widthMinPixels: undefined,
+    lineWidthMaxPixels: undefined,
+    lineWidthMinPixels: undefined,
     widthUnits: "pixels",
     wellNameZoomThreshold: undefined,
 };
@@ -449,8 +449,8 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
             pointBillboard: true,
             parameters,
             visible: fastDrawing,
-            widthMaxPixels: this.props.widthMaxPixels,
-            widthMinPixels: this.props.widthMinPixels,
+            lineWidthMaxPixels: this.props.lineWidthMaxPixels,
+            lineWidthMinPixels: this.props.lineWidthMinPixels,
         };
 
         const colorsLayerProps = this.getSubLayerProps({
@@ -466,6 +466,7 @@ export default class WellsLayer extends CompositeLayer<WellsLayerProps> {
             visible: !fastDrawing,
             getLineColor: getColor(this.props.lineStyle?.color),
             getFillColor: getColor(this.props.wellHeadStyle?.color),
+            lineWidthMinPixels: 150
         });
 
         const fastLayerProps = this.getSubLayerProps({
