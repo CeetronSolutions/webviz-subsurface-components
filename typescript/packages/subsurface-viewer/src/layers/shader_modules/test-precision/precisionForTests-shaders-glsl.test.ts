@@ -1,71 +1,47 @@
 import "jest";
 
-import { describe, expect, it, afterEach, jest } from "@jest/globals";
+import { describe, expect, it, afterEach } from "@jest/globals";
 
-describe("precisionForTests-shaders-glsl", () => {
-    const originalProcess = global.process;
+import { computePrecision } from "./precisionForTests-shaders-glsl";
+
+describe("computePrecision", () => {
+    const originalProcess = (globalThis as { process?: unknown }).process;
 
     afterEach(() => {
-        global.process = originalProcess;
-        jest.resetModules();
+        (globalThis as { process?: unknown }).process = originalProcess;
     });
 
-    it("does not throw when process is undefined (browser-like environment)", async () => {
-        // @ts-expect-error simulating browser where process is not defined
-        global.process = undefined;
-
-        await expect(
-            jest.isolateModulesAsync(
-                () => import("./precisionForTests-shaders-glsl")
-            )
-        ).resolves.not.toThrow();
+    it("does not throw when process is undefined (browser-like environment)", () => {
+        (globalThis as { process?: unknown }).process = undefined;
+        expect(() => computePrecision()).not.toThrow();
     });
 
-    it("selects PROD_PRECISION when process is undefined", async () => {
-        // @ts-expect-error simulating browser where process is not defined
-        global.process = undefined;
-
-        let PRECISION: string | undefined;
-        await jest.isolateModulesAsync(async () => {
-            ({ PRECISION } = await import("./precisionForTests-shaders-glsl"));
-        });
-
-        expect(PRECISION).toBe("");
+    it("selects PROD_PRECISION when process is undefined", () => {
+        (globalThis as { process?: unknown }).process = undefined;
+        expect(computePrecision()).toBe("");
     });
 
-    it("selects PROD_PRECISION when no relevant env vars are set", async () => {
-        global.process = { ...originalProcess, env: {} };
-
-        let PRECISION: string | undefined;
-        await jest.isolateModulesAsync(async () => {
-            ({ PRECISION } = await import("./precisionForTests-shaders-glsl"));
-        });
-
-        expect(PRECISION).toBe("");
+    it("selects PROD_PRECISION when no relevant env vars are set", () => {
+        (globalThis as { process?: { env: Record<string, string> } }).process =
+            { env: {} };
+        expect(computePrecision()).toBe("");
     });
 
-    it("selects TEST_PRECISION when NODE_ENV is not production", async () => {
-        global.process = { ...originalProcess, env: { NODE_ENV: "test" } };
-
-        let PRECISION: string | undefined;
-        await jest.isolateModulesAsync(async () => {
-            ({ PRECISION } = await import("./precisionForTests-shaders-glsl"));
-        });
-
-        expect(PRECISION).toContain("precision highp float");
+    it("selects TEST_PRECISION when NODE_ENV is not production", () => {
+        (
+            globalThis as {
+                process?: { env: Record<string, string> };
+            }
+        ).process = { env: { NODE_ENV: "test" } };
+        expect(computePrecision()).toContain("precision highp float");
     });
 
-    it("selects PROD_PRECISION when NODE_ENV is production", async () => {
-        global.process = {
-            ...originalProcess,
-            env: { NODE_ENV: "production" },
-        };
-
-        let PRECISION: string | undefined;
-        await jest.isolateModulesAsync(async () => {
-            ({ PRECISION } = await import("./precisionForTests-shaders-glsl"));
-        });
-
-        expect(PRECISION).toBe("");
+    it("selects PROD_PRECISION when NODE_ENV is production", () => {
+        (
+            globalThis as {
+                process?: { env: Record<string, string> };
+            }
+        ).process = { env: { NODE_ENV: "production" } };
+        expect(computePrecision()).toBe("");
     });
 });
