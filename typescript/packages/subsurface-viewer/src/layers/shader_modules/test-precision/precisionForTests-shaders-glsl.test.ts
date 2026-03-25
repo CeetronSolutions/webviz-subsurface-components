@@ -1,6 +1,6 @@
 import "jest";
 
-import { describe, expect, it, afterEach, beforeEach } from "@jest/globals";
+import { describe, expect, it, afterEach } from "@jest/globals";
 
 describe("precisionForTests-shaders-glsl", () => {
     const originalProcess = global.process;
