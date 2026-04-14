@@ -5,9 +5,18 @@ on:
     branches:
       - 'master'
 
+permissions:
+  contents: read # for checkout
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    # Inspired by https://github.com/semantic-release/semantic-release/blob/master/docs/recipes/ci-configurations/github-actions.md
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for trusted publishing and npm provenance
     steps:
       # Inspired by https://medium.com/@michadrabikowski/automated-releases-with-nx-and-github-actions-07f574041293
       - name: 📖 Checkout commit locally
@@ -17,9 +26,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure git
-        # must have push access to the repository
         run: |
-          git config --global user.name "Semantic Release"
+          git config --global user.name "hkfb"
           git config --global user.email "hkfb@users.noreply.github.com"
 
       - name: Setup Node.js
