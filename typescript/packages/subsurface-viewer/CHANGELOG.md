@@ -1,3 +1,17 @@
+## 1.17.4 (2026-04-17)
+
+### 🩹 Fixes
+
+- pin to deckgl 9.2 to prevent 9.3 being installed ([#2747](https://github.com/equinor/webviz-subsurface-components/pull/2747))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.4
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
 ## 1.17.3 (2026-04-15)
 
 ### 🧱 Updated Dependencies
