@@ -1,3 +1,13 @@
+## 1.9.5 (2026-04-21)
+
+### 🩹 Fixes
+
+- bump deckgl to 9.2.11 ([#2750](https://github.com/equinor/webviz-subsurface-components/pull/2750))
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
 ## 1.9.4 (2026-04-17)
 
 This was a version bump only for well-completions-plot to align it with other projects, there were no code changes.

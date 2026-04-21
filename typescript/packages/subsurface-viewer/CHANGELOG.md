@@ -1,3 +1,17 @@
+## 1.17.5 (2026-04-21)
+
+### 🩹 Fixes
+
+- bump deckgl to 9.2.11 ([#2750](https://github.com/equinor/webviz-subsurface-components/pull/2750))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.5
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
 ## 1.17.4 (2026-04-17)
 
 ### 🩹 Fixes
