@@ -34,5 +34,6 @@
         "git": {
             "commitMessage": "chore(release): updated version [no ci]"
         }
-    }
+    },
+    "analytics": false
 }
