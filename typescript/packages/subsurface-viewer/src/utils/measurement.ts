@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
+import { subtract, dot } from "mathjs";
 import type {
-    FeatureOf,
+    Feature,
     LineString,
     Polygon,
 } from "@deck.gl-community/editable-layers";
-import type { Position } from "@deck.gl/core";
+import type { Position } from "geojson";
 
 import { geomReduce, segmentReduce } from "@turf/meta";
 
-export function length(geojson: FeatureOf<LineString>): number {
+export function length(geojson: Feature<LineString>): number {
     // Calculate distance from 2-vertex line segments
     return segmentReduce(
         // @ts-ignore
         geojson,
-        function (previousValue?: number, segment?: FeatureOf<LineString>) {
+        function (previousValue?: number, segment?: Feature<LineString>) {
             if (segment === undefined || previousValue === undefined) return 0;
-            const coords = segment.geometry.coordinates as Position[];
+            const coords = segment.geometry.coordinates;
             return previousValue + distance(coords[0], coords[1]);
         },
         0
@@ -26,7 +27,7 @@ export function length(geojson: FeatureOf<LineString>): number {
 /**
  * Takes one or more features and returns their area in square meters.
  */
-export function area(geojson: FeatureOf<Polygon>): number {
+export function area(geojson: Feature<Polygon>): number {
     return geomReduce(
         // @ts-ignore
         geojson,
@@ -62,4 +63,67 @@ function calculateArea(geom: Polygon): number {
     }
 
     return Math.abs(total);
+}
+
+function squared_distance(a: Position, b: Position): number {
+    const dx = a[0] - b[0];
+    const dy = a[1] - b[1];
+    return dx * dx + dy * dy;
+}
+
+/**
+ * Calculates the squared distance from a point to a line segment
+ * @param v The start position of the segment
+ * @param w The end position of the segment
+ * @param p The point to calculate the distance to
+ * @returns The squared distance from the point to the segment
+ */
+export function distToSegmentSquared(
+    v: Position,
+    w: Position,
+    p: Position
+): number {
+    const l2 = squared_distance(v, w);
+    if (l2 == 0) return squared_distance(p, v);
+    let t =
+        ((p[0] - v[0]) * (w[0] - v[0]) + (p[1] - v[1]) * (w[1] - v[1])) / l2;
+    t = Math.max(0, Math.min(1, t));
+    return squared_distance(p, [
+        v[0] + t * (w[0] - v[0]),
+        v[1] + t * (w[1] - v[1]),
+    ]);
+}
+
+/**
+ * Checks if a point has moved beyond the end of a line segment
+ * @param point The point to check
+ * @param line The line segment, defined by start and end positions
+ * @returns True if the point has moved beyond the end of the line segment, false otherwise
+ */
+export function isPointAwayFromLineEnd(
+    point: Position,
+    line: [lineStart: Position, lineEnd: Position]
+): boolean {
+    const ab = subtract(line[1] as number[], line[0] as number[]);
+    const cb = subtract(line[1] as number[], point as number[]);
+
+    const dotProduct = dot(ab, cb);
+
+    // If the dot product is negative, the point has moved past the end of the line
+    return dotProduct < 0;
+}
+
+/**
+ * Check if a number is close (or equal) to another number
+ * @param number A number
+ * @param otherNumber Another number
+ * @param threshold The threshold within which the two numbers are considered "close". Defaults to `0.001`
+ * @returns true if the numbers are close, false otherwise
+ */
+export function isClose(
+    number: number,
+    otherNumber: number,
+    threshold: number = 0.001
+) {
+    return Math.abs(number - otherNumber) < threshold;
 }

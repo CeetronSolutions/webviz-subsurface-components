@@ -149,7 +149,6 @@ export class WellLabelLayer extends MergedTextLayer<
             sublayerProps?.updateTriggers?.["getAngle"] ?? [];
         const positionUpdateTriggers =
             sublayerProps?.updateTriggers?.["getPosition"] ?? [];
-
         const newProps = {
             ...sublayerProps,
             getPosition: (d: WellFeature) => {
@@ -172,6 +171,7 @@ export class WellLabelLayer extends MergedTextLayer<
                     this.context.viewport.cameraPosition,
                     this.props.getPositionAlongPath,
                 ],
+
                 all: [
                     this.context.viewport.cameraPosition,
                     this.props.getPositionAlongPath,

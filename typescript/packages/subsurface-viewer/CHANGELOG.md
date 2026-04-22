@@ -1,3 +1,570 @@
+## 1.17.5 (2026-04-21)
+
+### 🩹 Fixes
+
+- bump deckgl to 9.2.11 ([#2750](https://github.com/equinor/webviz-subsurface-components/pull/2750))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.5
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 1.17.4 (2026-04-17)
+
+### 🩹 Fixes
+
+- pin to deckgl 9.2 to prevent 9.3 being installed ([#2747](https://github.com/equinor/webviz-subsurface-components/pull/2747))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.4
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 1.17.3 (2026-04-15)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.3
+
+## 1.17.2 (2026-04-14)
+
+### 🩹 Fixes
+
+- bump mathjs from 13.2.0 to 15.2.0 in /typescript ([#2737](https://github.com/equinor/webviz-subsurface-components/pull/2737), [#3617](https://github.com/equinor/webviz-subsurface-components/issues/3617), [#3595](https://github.com/equinor/webviz-subsurface-components/issues/3595), [#3605](https://github.com/equinor/webviz-subsurface-components/issues/3605), [#3639](https://github.com/equinor/webviz-subsurface-components/issues/3639), [#3631](https://github.com/equinor/webviz-subsurface-components/issues/3631), [#3632](https://github.com/equinor/webviz-subsurface-components/issues/3632), [#3578](https://github.com/equinor/webviz-subsurface-components/issues/3578), [#3581](https://github.com/equinor/webviz-subsurface-components/issues/3581), [#3597](https://github.com/equinor/webviz-subsurface-components/issues/3597), [#3601](https://github.com/equinor/webviz-subsurface-components/issues/3601), [#3630](https://github.com/equinor/webviz-subsurface-components/issues/3630), [#3565](https://github.com/equinor/webviz-subsurface-components/issues/3565), [#3591](https://github.com/equinor/webviz-subsurface-components/issues/3591), [#3341](https://github.com/equinor/webviz-subsurface-components/issues/3341), [#3606](https://github.com/equinor/webviz-subsurface-components/issues/3606), [#3602](https://github.com/equinor/webviz-subsurface-components/issues/3602), [#3554](https://github.com/equinor/webviz-subsurface-components/issues/3554), [#3553](https://github.com/equinor/webviz-subsurface-components/issues/3553), [#3551](https://github.com/equinor/webviz-subsurface-components/issues/3551), [#3547](https://github.com/equinor/webviz-subsurface-components/issues/3547), [#3580](https://github.com/equinor/webviz-subsurface-components/issues/3580), [#3586](https://github.com/equinor/webviz-subsurface-components/issues/3586), [#3587](https://github.com/equinor/webviz-subsurface-components/issues/3587), [#3585](https://github.com/equinor/webviz-subsurface-components/issues/3585), [#3579](https://github.com/equinor/webviz-subsurface-components/issues/3579), [#3584](https://github.com/equinor/webviz-subsurface-components/issues/3584), [#3564](https://github.com/equinor/webviz-subsurface-components/issues/3564), [#3567](https://github.com/equinor/webviz-subsurface-components/issues/3567), [#3574](https://github.com/equinor/webviz-subsurface-components/issues/3574), [#3575](https://github.com/equinor/webviz-subsurface-components/issues/3575), [#3562](https://github.com/equinor/webviz-subsurface-components/issues/3562), [#3572](https://github.com/equinor/webviz-subsurface-components/issues/3572), [#3349](https://github.com/equinor/webviz-subsurface-components/issues/3349), [#3432](https://github.com/equinor/webviz-subsurface-components/issues/3432), [#1753](https://github.com/equinor/webviz-subsurface-components/issues/1753), [#3461](https://github.com/equinor/webviz-subsurface-components/issues/3461), [#3455](https://github.com/equinor/webviz-subsurface-components/issues/3455), [#2344](https://github.com/equinor/webviz-subsurface-components/issues/2344), [#3485](https://github.com/equinor/webviz-subsurface-components/issues/3485))
+- bump lodash from 4.17.23 to 4.18.1 in /typescript ([#2734](https://github.com/equinor/webviz-subsurface-components/pull/2734), [#6167](https://github.com/equinor/webviz-subsurface-components/issues/6167), [#6099](https://github.com/equinor/webviz-subsurface-components/issues/6099), [#6115](https://github.com/equinor/webviz-subsurface-components/issues/6115), [#6090](https://github.com/equinor/webviz-subsurface-components/issues/6090), [#6177](https://github.com/equinor/webviz-subsurface-components/issues/6177), [#6170](https://github.com/equinor/webviz-subsurface-components/issues/6170), [#6165](https://github.com/equinor/webviz-subsurface-components/issues/6165), [#6161](https://github.com/equinor/webviz-subsurface-components/issues/6161), [#6153](https://github.com/equinor/webviz-subsurface-components/issues/6153), [#6137](https://github.com/equinor/webviz-subsurface-components/issues/6137))
+- guarding against missing `process` variable in browsers ([#2724](https://github.com/equinor/webviz-subsurface-components/pull/2724), [#2723](https://github.com/equinor/webviz-subsurface-components/issues/2723))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.2
+
+### ❤️ Thank You
+
+- Ruben Thoms @rubenthoms
+
+## 1.17.1 (2026-02-23)
+
+### 🩹 Fixes
+
+- bump ajv to latest ([#2713](https://github.com/equinor/webviz-subsurface-components/pull/2713))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.1
+
+### ❤️ Thank You
+
+- Håvard Bjerke
+
+## 1.17.0 (2026-02-16)
+
+### 🚀 Features
+
+- add support for @mui 7 ([#2709](https://github.com/equinor/webviz-subsurface-components/pull/2709))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.0
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 1.16.1 (2026-02-13)
+
+### 🩹 Fixes
+
+- bump the deckgl group in /typescript with 8 updates ([#2710](https://github.com/equinor/webviz-subsurface-components/pull/2710), [#9993](https://github.com/equinor/webviz-subsurface-components/issues/9993), [#9988](https://github.com/equinor/webviz-subsurface-components/issues/9988), [#9971](https://github.com/equinor/webviz-subsurface-components/issues/9971), [#9984](https://github.com/equinor/webviz-subsurface-components/issues/9984), [#9948](https://github.com/equinor/webviz-subsurface-components/issues/9948), [#9937](https://github.com/equinor/webviz-subsurface-components/issues/9937), [#9956](https://github.com/equinor/webviz-subsurface-components/issues/9956), [#9965](https://github.com/equinor/webviz-subsurface-components/issues/9965), [#9955](https://github.com/equinor/webviz-subsurface-components/issues/9955), [#9944](https://github.com/equinor/webviz-subsurface-components/issues/9944), [#9](https://github.com/equinor/webviz-subsurface-components/issues/9), [#9990](https://github.com/equinor/webviz-subsurface-components/issues/9990), [#9970](https://github.com/equinor/webviz-subsurface-components/issues/9970))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.23
+
+## 1.16.0 (2026-02-06)
+
+### 🚀 Features
+
+- Subsurface viewer - Extended features for the Wells-layer ([#2696](https://github.com/equinor/webviz-subsurface-components/pull/2696))
+
+### ❤️ Thank You
+
+- Anders Rantala Hunderi
+- Håvard Bjerke
+
+## 1.15.86 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.97
+
+## 1.15.85 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.96
+
+## 1.15.84 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.95
+
+## 1.15.83 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.94
+
+## 1.15.82 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.93
+
+## 1.15.81 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.92
+
+## 1.15.80 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.91
+
+## 1.15.79 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.90
+
+## 1.15.78 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.89
+
+## 1.15.77 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.88
+
+## 1.15.76 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.87
+
+## 1.15.75 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.86
+
+## 1.15.74 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.85
+
+## 1.15.73 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.84
+
+## 1.15.72 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.83
+
+## 1.15.71 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.82
+
+## 1.15.70 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.81
+
+## 1.15.69 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.80
+
+## 1.15.68 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.79
+
+## 1.15.67 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.78
+
+## 1.15.66 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.77
+
+## 1.15.65 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.76
+
+## 1.15.64 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.75
+
+## 1.15.63 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.74
+
+## 1.15.62 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.73
+
+## 1.15.61 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.72
+
+## 1.15.60 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.71
+
+## 1.15.59 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.70
+
+## 1.15.58 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.69
+
+## 1.15.57 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.68
+
+## 1.15.56 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.67
+
+## 1.15.55 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.66
+
+## 1.15.54 (2025-12-19)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.65
+
+## 1.15.53 (2025-12-18)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.64
+
+## 1.15.52 (2025-12-18)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.63
+
+## 1.15.51 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.62
+
+## 1.15.50 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.61
+
+## 1.15.49 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.60
+
+## 1.15.48 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.59
+
+## 1.15.47 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.58
+
+## 1.15.46 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.57
+
+## 1.15.45 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.56
+
+## 1.15.44 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.55
+
+## 1.15.43 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.54
+
+## 1.15.42 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.53
+
+## 1.15.41 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.52
+
+## 1.15.40 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.51
+
+## 1.15.39 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.50
+
+## 1.15.38 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.49
+
+## 1.15.37 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.48
+
+## 1.15.36 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.47
+
+## 1.15.35 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.46
+
+## 1.15.34 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.45
+
+## 1.15.33 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.44
+
+## 1.15.32 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.43
+
+## 1.15.31 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.42
+
+## 1.15.30 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.41
+
+## 1.15.29 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.40
+
+## 1.15.28 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.39
+
+## 1.15.27 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.38
+
+## 1.15.26 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.37
+
+## 1.15.25 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.36
+
+## 1.15.24 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.35
+
+## 1.15.23 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.34
+
+## 1.15.22 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.33
+
+## 1.15.21 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.32
+
+## 1.15.20 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.31
+
+## 1.15.19 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.30
+
+## 1.15.18 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.29
+
+## 1.15.17 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.28
+
+## 1.15.16 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.27
+
+## 1.15.15 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.26
+
+## 1.15.14 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.25
+
+## 1.15.13 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.24
+
+## 1.15.12 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.23
+
+## 1.15.11 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.22
+
+## 1.15.10 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.21
+
+## 1.15.9 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.20
+
 ## 1.15.8 (2025-12-17)
 
 ### 🧱 Updated Dependencies

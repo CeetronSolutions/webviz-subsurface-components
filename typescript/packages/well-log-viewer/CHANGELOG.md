@@ -1,3 +1,531 @@
+## 2.7.5 (2026-04-21)
+
+### 🩹 Fixes
+
+- bump deckgl to 9.2.11 ([#2750](https://github.com/equinor/webviz-subsurface-components/pull/2750))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.5
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 2.7.4 (2026-04-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.4
+
+## 2.7.3 (2026-04-15)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.3
+
+## 2.7.2 (2026-04-14)
+
+### 🩹 Fixes
+
+- clean WLV API ([#2735](https://github.com/equinor/webviz-subsurface-components/pull/2735))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.2
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 2.7.1 (2026-02-23)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.1
+
+## 2.7.0 (2026-02-16)
+
+### 🚀 Features
+
+- add support for @mui 7 ([#2709](https://github.com/equinor/webviz-subsurface-components/pull/2709))
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.4.0
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 2.6.98 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.97
+
+## 2.6.97 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.96
+
+## 2.6.96 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.95
+
+## 2.6.95 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.94
+
+## 2.6.94 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.93
+
+## 2.6.93 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.92
+
+## 2.6.92 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.91
+
+## 2.6.91 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.90
+
+## 2.6.90 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.89
+
+## 2.6.89 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.88
+
+## 2.6.88 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.87
+
+## 2.6.87 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.86
+
+## 2.6.86 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.85
+
+## 2.6.85 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.84
+
+## 2.6.84 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.83
+
+## 2.6.83 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.82
+
+## 2.6.82 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.81
+
+## 2.6.81 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.80
+
+## 2.6.80 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.79
+
+## 2.6.79 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.78
+
+## 2.6.78 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.77
+
+## 2.6.77 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.76
+
+## 2.6.76 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.75
+
+## 2.6.75 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.74
+
+## 2.6.74 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.73
+
+## 2.6.73 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.72
+
+## 2.6.72 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.71
+
+## 2.6.71 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.70
+
+## 2.6.70 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.69
+
+## 2.6.69 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.68
+
+## 2.6.68 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.67
+
+## 2.6.67 (2026-01-05)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.66
+
+## 2.6.66 (2025-12-19)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.65
+
+## 2.6.65 (2025-12-18)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.64
+
+## 2.6.64 (2025-12-18)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.63
+
+## 2.6.63 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.62
+
+## 2.6.62 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.61
+
+## 2.6.61 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.60
+
+## 2.6.60 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.59
+
+## 2.6.59 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.58
+
+## 2.6.58 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.57
+
+## 2.6.57 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.56
+
+## 2.6.56 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.55
+
+## 2.6.55 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.54
+
+## 2.6.54 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.53
+
+## 2.6.53 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.52
+
+## 2.6.52 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.51
+
+## 2.6.51 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.50
+
+## 2.6.50 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.49
+
+## 2.6.49 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.48
+
+## 2.6.48 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.47
+
+## 2.6.47 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.46
+
+## 2.6.46 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.45
+
+## 2.6.45 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.44
+
+## 2.6.44 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.43
+
+## 2.6.43 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.42
+
+## 2.6.42 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.41
+
+## 2.6.41 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.40
+
+## 2.6.40 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.39
+
+## 2.6.39 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.38
+
+## 2.6.38 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.37
+
+## 2.6.37 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.36
+
+## 2.6.36 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.35
+
+## 2.6.35 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.34
+
+## 2.6.34 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.33
+
+## 2.6.33 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.32
+
+## 2.6.32 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.31
+
+## 2.6.31 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.30
+
+## 2.6.30 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.29
+
+## 2.6.29 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.28
+
+## 2.6.28 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.27
+
+## 2.6.27 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.26
+
+## 2.6.26 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.25
+
+## 2.6.25 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.24
+
+## 2.6.24 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.23
+
+## 2.6.23 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.22
+
+## 2.6.22 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.21
+
+## 2.6.21 (2025-12-17)
+
+### 🧱 Updated Dependencies
+
+- Updated wsc-common to 1.3.20
+
 ## 2.6.20 (2025-12-17)
 
 ### 🧱 Updated Dependencies

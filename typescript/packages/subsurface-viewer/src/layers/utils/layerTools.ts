@@ -1,15 +1,17 @@
+import type { ColorTableArray } from "@emerson-eps/color-tables";
 import { Matrix4 } from "math.gl";
 
-import type { PickingInfo } from "@deck.gl/core";
-import type { Color, LayerContext } from "@deck.gl/core";
 import type {
-    Layer,
-    LayersList,
-    LayerManager,
+    Accessor,
+    AccessorContext,
+    ChangeFlags,
+    Color,
     CompositeLayerProps,
+    LayerContext,
+    LayersList,
+    PickingInfo,
 } from "@deck.gl/core";
-
-import type { colorTablesArray } from "@emerson-eps/color-tables/";
+import type { Layer, LayerManager } from "@deck.gl/core";
 
 import type {
     ContinuousLegendDataType,
@@ -18,7 +20,7 @@ import type {
 import type DrawingLayer from "../drawing/drawingLayer";
 
 import type { BoundingBox3D } from "../../utils";
-import { computeBoundingBox as buidBoundingBox } from "../../utils/BoundingBox3D";
+import { computeBoundingBox as buildBoundingBox } from "../../utils/BoundingBox3D";
 
 export interface TypeAndNameLayerProps {
     "@@type"?: string;
@@ -36,7 +38,7 @@ export interface ExtendedLegendLayer extends Layer {
 export interface DeckGLLayerContext extends LayerContext {
     userData: {
         setEditedData: (data: Record<string, unknown>) => void;
-        colorTables: colorTablesArray;
+        colorTables: ColorTableArray;
     };
 }
 
@@ -187,7 +189,7 @@ export function computeBoundingBox(
     dataArray: Float32Array,
     zIncreasingDownwards: boolean = false
 ): BoundingBox3D {
-    const bbox = buidBoundingBox(dataArray);
+    const bbox = buildBoundingBox(dataArray);
     if (zIncreasingDownwards) {
         // invert Z coordinates
         bbox[2] = -bbox[2];
@@ -197,3 +199,37 @@ export function computeBoundingBox(
 }
 
 export type ReportBoundingBoxAction = { layerBoundingBox: BoundingBox3D };
+
+/**
+ * Gets a value from a deck.gl accessor (aka, calls it if its a function, or returns the static value)
+ * @param accessor A deck.gl Accessor
+ * @param data The data object passed to the accessor
+ * @param objectInfo Info about the data object. Passed to the accessor
+ * @returns
+ */
+export function getFromAccessor<In, Out>(
+    accessor: Accessor<In, Out>,
+    data: In,
+    objectInfo: AccessorContext<In>
+): Out {
+    if (typeof accessor !== "function") return accessor;
+
+    // `Out` can *theoretically* still be a function, so Typescript won't narrow this to be an AccessorFunction. Deck.gl does however
+    // ensure that Out is never a function, so we'll just expect the error here (the same approach is used internally in Deck.gl)
+    // @ts-expect-error -- Out is always a function here
+    return accessor(data, objectInfo);
+}
+
+/**
+ * Checks if a specified updateTrigger is flagged as changed
+ * @param changeFlags The deck.gl change-flag object
+ * @param updateTriggerName The name of the trigger to check
+ * @returns true if the update trigger has changed
+ */
+export function hasUpdateTriggerChanged(
+    changeFlags: ChangeFlags,
+    updateTriggerName: string
+): boolean {
+    if (!changeFlags.updateTriggersChanged) return false;
+    return !!changeFlags.updateTriggersChanged[updateTriggerName];
+}

@@ -5,7 +5,13 @@
         "default": {
             "runner": "nx/tasks-runners/default",
             "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e"]
+                "cacheableOperations": [
+                    "build",
+                    "lint",
+                    "test",
+                    "e2e",
+                    "typecheck"
+                ]
             }
         }
     },
@@ -15,12 +21,19 @@
         }
     },
     "release": {
-        "version": { "conventionalCommits": true },
+        "version": {
+            "conventionalCommits": true,
+            "updateDependents": "auto"
+        },
         "projectsRelationship": "independent",
         "changelog": {
             "projectChangelogs": {
                 "createRelease": "github"
             }
+        },
+        "git": {
+            "commitMessage": "chore(release): updated version [no ci]"
         }
-    }
+    },
+    "analytics": false
 }

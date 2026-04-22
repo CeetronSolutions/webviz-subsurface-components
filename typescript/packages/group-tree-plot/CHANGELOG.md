@@ -1,3 +1,357 @@
+## 1.7.5 (2026-04-21)
+
+### 🩹 Fixes
+
+- bump deckgl to 9.2.11 ([#2750](https://github.com/equinor/webviz-subsurface-components/pull/2750))
+
+### ❤️ Thank You
+
+- t0oF @w1nklr
+
+## 1.7.4 (2026-04-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.7.3 (2026-04-15)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.7.2 (2026-04-14)
+
+### 🩹 Fixes
+
+- bump lodash from 4.17.23 to 4.18.1 in /typescript ([#2734](https://github.com/equinor/webviz-subsurface-components/pull/2734), [#6167](https://github.com/equinor/webviz-subsurface-components/issues/6167), [#6099](https://github.com/equinor/webviz-subsurface-components/issues/6099), [#6115](https://github.com/equinor/webviz-subsurface-components/issues/6115), [#6090](https://github.com/equinor/webviz-subsurface-components/issues/6090), [#6177](https://github.com/equinor/webviz-subsurface-components/issues/6177), [#6170](https://github.com/equinor/webviz-subsurface-components/issues/6170), [#6165](https://github.com/equinor/webviz-subsurface-components/issues/6165), [#6161](https://github.com/equinor/webviz-subsurface-components/issues/6161), [#6153](https://github.com/equinor/webviz-subsurface-components/issues/6153), [#6137](https://github.com/equinor/webviz-subsurface-components/issues/6137))
+
+## 1.7.1 (2026-02-23)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.7.0 (2026-02-16)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.98 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.97 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.96 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.95 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.94 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.93 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.92 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.91 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.90 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.89 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.88 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.87 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.86 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.85 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.84 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.83 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.82 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.81 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.80 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.79 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.78 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.77 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.76 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.75 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.74 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.73 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.72 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.71 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.70 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.69 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.68 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.67 (2026-01-05)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.66 (2025-12-19)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.65 (2025-12-18)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.64 (2025-12-18)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.63 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.62 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.61 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.60 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.59 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.58 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.57 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.56 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.55 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.54 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.53 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.52 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.51 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.50 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.49 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.48 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.47 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.46 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.45 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.44 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.43 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.42 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.41 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.40 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.39 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.38 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.37 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.36 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.35 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.34 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.33 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.32 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.31 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.30 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.29 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.28 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.27 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.26 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.25 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.24 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.23 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.22 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.21 (2025-12-17)
+
+This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.
+
+## 1.6.20 (2025-12-17)
+
+### 🩹 Fixes
+
+- GroupTreePlot incorrect initial selectedDateTime value ([#2678](https://github.com/equinor/webviz-subsurface-components/pull/2678), [#2677](https://github.com/equinor/webviz-subsurface-components/issues/2677))
+
+### ❤️ Thank You
+
+- Jørgen Herje @jorgenherje
+
 ## 1.6.19 (2025-12-17)
 
 This was a version bump only for group-tree-plot to align it with other projects, there were no code changes.

@@ -1,7 +1,7 @@
 import React from "react";
 
 import type { Layer, LayersList } from "@deck.gl/core";
-import type { colorTablesArray } from "@emerson-eps/color-tables/";
+import type { ColorTableArray } from "@emerson-eps/color-tables";
 
 import type { Unit } from "convert-units";
 import convert from "convert-units";
@@ -24,12 +24,17 @@ import { TGrid3DColoringMode } from "./layers/grid3d/grid3dLayer";
 
 export type {
     BoundsAccessor,
-    colorTablesArray,
+    ColorTableArray,
     MapMouseEvent,
     TooltipCallback,
     ViewStateType,
     ViewsType,
 };
+
+/**
+ * @deprecated Use ColorTableArray instead.
+ */
+export type colorTablesArray = ColorTableArray;
 
 export { TGrid3DColoringMode };
 
@@ -38,25 +43,23 @@ export type LightsType = {
         intensity: number;
         color?: [number, number, number]; // RGBColor;
     };
+
     ambientLight?: {
         intensity: number;
         color?: [number, number, number]; // RGBColor;
     };
-    pointLights?: [
-        {
-            intensity: number;
-            position: [number, number, number]; // Point3D;
-            color?: [number, number, number]; // RGBColor;
-        },
-    ];
 
-    directionalLights?: [
-        {
-            intensity: number;
-            direction: [number, number, number]; // Point3D;
-            color?: [number, number, number]; // RGBColor;
-        },
-    ];
+    pointLights?: Array<{
+        intensity: number;
+        position: [number, number, number]; // Point3D;
+        color?: [number, number, number]; // RGBColor;
+    }>;
+
+    directionalLights?: Array<{
+        intensity: number;
+        direction: [number, number, number]; // Point3D;
+        color?: [number, number, number]; // RGBColor;
+    }>;
 };
 
 export type TLayerDefinition =

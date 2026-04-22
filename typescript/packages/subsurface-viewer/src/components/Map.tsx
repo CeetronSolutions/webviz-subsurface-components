@@ -40,7 +40,7 @@ import { Matrix4 } from "@math.gl/core";
 import { fovyToAltitude } from "@math.gl/web-mercator";
 
 import { colorTables as defaultColorTables } from "@emerson-eps/color-tables";
-import type { colorTablesArray } from "@emerson-eps/color-tables/";
+import type { ColorTableArray } from "@emerson-eps/color-tables";
 
 import { validateColorTables, validateLayers } from "@webviz/wsc-common";
 import { Axes2DLayer, NorthArrow3DLayer, WellsLayer } from "../layers";
@@ -372,7 +372,7 @@ export interface MapProps {
     /**
      * Prop containing color table data
      */
-    colorTables?: colorTablesArray;
+    colorTables?: ColorTableArray;
 
     /**
      * @deprecated Used by layers to propagate state to component, eg. selected
@@ -2236,7 +2236,8 @@ function handleMouseEvent(
             ev.x = info.coordinate[0];
             ev.y = info.coordinate[1];
         }
-        if (info.layer && info.layer.id === "wells-layer") {
+
+        if (info.layer && info.layer instanceof WellsLayer) {
             // info.object is Feature or WellLog;
             {
                 // try to use Object info (see DeckGL getToolTip callback)
